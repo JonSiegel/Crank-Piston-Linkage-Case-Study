@@ -3,7 +3,7 @@
 **ME 3319 – System Dynamics | Cal Poly San Luis Obispo**
 **Tools:** MATLAB · Simulink · `fsolve` · ode45
 
-![Linkage animation](figures/linkage_animation_final_frame.png)
+![Linkage animation](crank-piston-linkage/figures/linkage_animation_final_frame.png)
 
 ## Overview
 
@@ -33,7 +33,7 @@ Because $\theta_3$ appears inside trig functions, every crank angle has **two va
 
 **Verification:** an independent rigid-body relative-velocity check ($v_B = v_A + \omega_3 \times r_{B/A}$) matched the matrix solution to **~7×10⁻¹⁸ m/s**, which is machine precision.
 
-![Part A sweep](figures/partA_position_velocity_sweep.png)
+![Part A sweep](crank-piston-linkage/figures/partA_position_velocity_sweep.png)
 
 - Slider speed peaks when the **crank is roughly perpendicular to the coupler**. At that point all of A's velocity is directed along the coupler into the slider.
 - Coupler angular speed peaks at **θ₂ = 0**, where the crank and coupler line up and the slider is momentarily at rest (dead center).
@@ -44,9 +44,9 @@ Because $\theta_3$ appears inside trig functions, every crank angle has **two va
 
 Differentiating again gives $J\ddot{q} = b_a$. I implemented this in a Simulink model: a MATLAB Function block computes $\ddot{q}$ from the crank input and the current state, and two integrators produce $\dot{q}$ and $q$ from the Part A initial conditions.
 
-![Simulink model](figures/simulink_model.png)
+![Simulink model](crank-piston-linkage/figures/simulink_model.png)
 
-![Part B simulation](figures/partB_simulation_q_qdot_qddot.png)
+![Part B simulation](crank-piston-linkage/figures/partB_simulation_q_qdot_qddot.png)
 
 **Validation against Part A:** I compared the integrated configuration to the algebraic `fsolve` solution at matching crank angles over two full revolutions. The maximum drift was:
 
@@ -57,7 +57,7 @@ Differentiating again gives $J\ddot{q} = b_a$. I implemented this in a Simulink 
 
 Both are on the order of the solver's relative tolerance (10⁻⁶). The simulation holds the constraint closely and never jumps to the other assembly branch.
 
-![Pin velocities](figures/partB_pin_velocities.png)
+![Pin velocities](crank-piston-linkage/figures/partB_pin_velocities.png)
 
 ---
 
@@ -69,7 +69,7 @@ $$K\,y = d, \qquad y = [O_x,\ O_y,\ A_x,\ A_y,\ B_x,\ B_y,\ C_y,\ M_C,\ T]^T$$
 
 I solved this system at every simulation time step to recover the pin reactions, guide force and moment, and the input torque needed to maintain constant crank speed.
 
-![Part C loads](figures/partC_loads_second_revolution.png)
+![Part C loads](crank-piston-linkage/figures/partC_loads_second_revolution.png)
 
 **Key findings:**
 - **Peak pin loads occur at θ₂ = 0** (|A| ≈ 0.65 N, |B| ≈ 0.4 N). The crank and coupler are collinear there, their centripetal accelerations add, and the links must decelerate the rod and reverse its direction.
@@ -79,7 +79,7 @@ I solved this system at every simulation time step to recover the pin reactions,
 
 Every acceleration in the model scales with $\dot{\theta}_2^2$ at constant crank speed, so doubling the speed should roughly **quadruple** the inertial loads. I reran the full pipeline at 2× speed to test this.
 
-![Torque scaling](figures/torque_speed_scaling.png)
+![Torque scaling](crank-piston-linkage/figures/torque_speed_scaling.png)
 
 Peak torque rose from **~0.04 N·m to ~0.15 N·m (≈ 3.75×)**, close to the predicted 4×. The doubled-speed curve has the same shape as the nominal one, just scaled up.
 
@@ -98,7 +98,7 @@ crank-piston-linkage/
     └── ME3319_Lab5_Report.pdf           # Full report with derivations and hand calcs
 ```
 
-**To run:** open MATLAB in the `matlab/` folder and run `crank_piston_analysis.m`. The Simulink model reads its parameters and initial conditions from the workspace, so start from the script. It also exports an animated GIF of the linkage.
+**To run:** open MATLAB in the `crank-piston-linkage/matlab/` folder and run `crank_piston_analysis.m`. The Simulink model reads its parameters and initial conditions from the workspace, so start from the script. It also exports an animated GIF of the linkage.
 
 ## What I'd Extend Next
 
