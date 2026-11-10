@@ -27,7 +27,9 @@ The analysis has three stages, and each one builds on the previous one.
 
 A closed vector loop O → A → B gives two nonlinear constraint equations in the dependent coordinates $q = [r_{OB};\ \theta_3]$:
 
-$$\Phi(q,\theta_2) = \begin{bmatrix} r_2\cos\theta_2 + r_3\cos\theta_3 - r_{OB} \\ r_2\sin\theta_2 + r_3\sin\theta_3 \end{bmatrix} = 0$$
+```math
+\Phi(q,\theta_2) = \begin{bmatrix} r_2\cos\theta_2 + r_3\cos\theta_3 - r_{OB} \\ r_2\sin\theta_2 + r_3\sin\theta_3 \end{bmatrix} = 0
+```
 
 Because $\theta_3$ appears inside trig functions, every crank angle has **two valid assemblies**. I solved the constraints with `fsolve` using the analytic Jacobian $J$, and seeded each step with the previous solution, so the sweep stays on the intended assembly branch across a full revolution. Differentiating the constraints gives the linear velocity equations $J\dot{q} = b_v$.
 
