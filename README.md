@@ -3,7 +3,7 @@
 **ME 3319 – System Dynamics | Cal Poly San Luis Obispo**
 **Tools:** MATLAB · Simulink · `fsolve` · ode45
 
-![Linkage animation](crank-piston-linkage/figures/linkage_animation_final_frame.png)
+![Crank-piston linkage animation](figures/Lab5B_LinkageAnimation.gif)
 
 ## Overview
 
